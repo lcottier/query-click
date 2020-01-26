@@ -1,0 +1,52 @@
+<div fxFlex="1 1 auto" fxLayout="row wrap" *ngIf="localCityData">
+    <mat-card class="card" *ngFor="let request of localCityData.request; let i = index" fxFlex="50%" fxLayout="column">
+        <mat-card-header>
+            <mat-card-title class="title">
+                Request {{i + 1}}: {{request.type}} - {{request.query}}
+            </mat-card-title>
+        </mat-card-header>
+        <mat-divider class="divider"></mat-divider>
+        <mat-card-content class="content" fxLayout="column">
+            <mat-grid-list cols="4" rowHeight="50px">
+                <mat-grid-tile i18n>
+                    Month
+                </mat-grid-tile>
+                <mat-grid-tile i18n>
+                    Average Minimum Temperature (C)
+                </mat-grid-tile>
+                <mat-grid-tile i18n>
+                    Absolute Maximum Temperature (C)
+                </mat-grid-tile>
+                <mat-grid-tile i18n>
+                    Average Daily Rainfall (mm)
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div class="dataRow" *ngFor="let month of localCityData.ClimateAverages[i].month;">
+                <mat-grid-list cols="4" rowHeight="20px">
+                    <mat-grid-tile [ngClass]="{'spring': month.season === 'spring',
+                    'summer': month.season === 'summer',
+                    'autumn': month.season === 'autumn',
+                    'winter': month.season === 'winter'}">
+                        {{month.name}}
+                    </mat-grid-tile>
+                    <mat-grid-tile [ngClass]="{'coldest': month.coldest}">
+                        {{month.avgMinTemp}}
+                    </mat-grid-tile>
+                    <mat-grid-tile [ngClass]="{'hottest': month.hottest}">
+                        {{month.absMaxTemp}}
+                    </mat-grid-tile>
+                    <mat-grid-tile [ngClass]="{'wettest': month.wettest}">
+                        {{month.avgDailyRainfall}}
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+            <div fxLayout="row wrap">
+                <p i18n>Each month is coloured to show which tradtional season its data is closest to:</p>
+                <div class="spring" i18n>Spring</div>
+                <div class="summer" i18n>Summer</div>
+                <div class="autumn" i18n>Autumn</div>
+                <div class="winter" i18n>Winter</div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
